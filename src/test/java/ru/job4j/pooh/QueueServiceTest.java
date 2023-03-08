@@ -19,7 +19,7 @@ class QueueServiceTest {
         );
         assertThat(first.getText()).isEqualTo("temperature=18");
         assertThat(first.getStatus()).isEqualTo("200");
-        assertThat(second.getText()).isNull();
+        assertThat(second.getText()).isEqualTo("");
         assertThat(second.getStatus()).isEqualTo("204");
     }
 }

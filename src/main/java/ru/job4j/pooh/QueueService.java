@@ -11,17 +11,19 @@ public class QueueService implements Service {
 
     @Override
     public Response process(Request request) {
-        String status = "204";
-        String text = null;
+        String status = "200";
+        String text = "";
         if (POST.equals(request.getHttpRequestType())) {
             queue.putIfAbsent(request.getSourceName(), new ConcurrentLinkedQueue<>());
             queue.get(request.getSourceName()).add(request.getParam());
         }
         if (GET.equals(request.getHttpRequestType())) {
+            queue.putIfAbsent(request.getSourceName(), new ConcurrentLinkedQueue<>());
             text = queue.get(request.getSourceName()).poll();
         }
-        if (text != null) {
-            status = "200";
+        if (text == null) {
+            status = "204";
+            text = "";
         }
         return new Response(text, status);
     }
