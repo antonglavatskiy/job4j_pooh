@@ -6,15 +6,17 @@ import static org.assertj.core.api.Assertions.*;
 class RequestTest {
     @Test
     public void whenUnknownRequest() {
-        String ls = System.lineSeparator();
-        String content = "UPDATE /queue/weather HTTP/1.1" + ls +
-                "Host: localhost:9000" + ls +
-                "User-Agent: curl/7.72.0" + ls +
-                "Accept: */*" + ls +
-                "Content-Length: 14" + ls +
-                "Content-Type: application/x-www-form-urlencoded" + ls +
-                "" + ls +
-                "temperature=18" + ls;
+        String content = """
+                UPDATE /queue/weather HTTP/1.1
+                Host: localhost:9000
+                User-Agent: curl/7.72.0
+                Accept: */*
+                Content-Length: 14
+                Content-Type: application/x-www-form-urlencoded
+                
+                temperature=18
+                
+                """;
         assertThatThrownBy(() -> Request.of(content))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Unknown request");
@@ -22,15 +24,17 @@ class RequestTest {
 
     @Test
     public void whenQueueModePostMethod() {
-        String ls = System.lineSeparator();
-        String content = "POST /queue/weather HTTP/1.1" + ls +
-                "Host: localhost:9000" + ls +
-                "User-Agent: curl/7.72.0" + ls +
-                "Accept: */*" + ls +
-                "Content-Length: 14" + ls +
-                "Content-Type: application/x-www-form-urlencoded" + ls +
-                "" + ls +
-                "temperature=18" + ls;
+        String content = """
+                POST /queue/weather HTTP/1.1
+                Host: localhost:9000
+                User-Agent: curl/7.72.0
+                Accept: */*
+                Content-Length: 14
+                Content-Type: application/x-www-form-urlencoded
+                
+                temperature=18
+                
+                """;
         Request request = Request.of(content);
         assertThat(request.getHttpRequestType()).isEqualTo("POST");
         assertThat(request.getPoohMode()).isEqualTo("queue");
@@ -40,11 +44,15 @@ class RequestTest {
 
     @Test
     public void whenQueueModeGetMethod() {
-        String ls = System.lineSeparator();
-        String content = "GET /queue/weather HTTP/1.1" + ls
-                + "Host: localhost:9000" + ls
-                + "User-Agent: curl/7.72.0" + ls
-                + "Accept: */*" + ls + ls + ls;
+        String content = """
+                GET /queue/weather HTTP/1.1
+                Host: localhost:9000
+                User-Agent: curl/7.72.0
+                Accept: */*
+ 
+ 
+ 
+                """;
         Request request = Request.of(content);
         assertThat(request.getHttpRequestType()).isEqualTo("GET");
         assertThat(request.getPoohMode()).isEqualTo("queue");
@@ -54,15 +62,17 @@ class RequestTest {
 
     @Test
     public void whenTopicModePostMethod() {
-        String ls = System.lineSeparator();
-        String content = "POST /topic/weather HTTP/1.1" + ls +
-                "Host: localhost:9000" + ls +
-                "User-Agent: curl/7.72.0" + ls +
-                "Accept: */*" + ls +
-                "Content-Length: 14" + ls +
-                "Content-Type: application/x-www-form-urlencoded" + ls +
-                "" + ls +
-                "temperature=18" + ls;
+        String content = """
+                POST /topic/weather HTTP/1.1
+                Host: localhost:9000
+                User-Agent: curl/7.72.0
+                Accept: */*
+                Content-Length: 14
+                Content-Type: application/x-www-form-urlencoded
+                
+                temperature=18
+                
+                """;
         Request request = Request.of(content);
         assertThat(request.getHttpRequestType()).isEqualTo("POST");
         assertThat(request.getPoohMode()).isEqualTo("topic");
@@ -72,11 +82,15 @@ class RequestTest {
 
     @Test
     public void whenTopicModeGetMethod() {
-        String ls = System.lineSeparator();
-        String content = "GET /topic/weather/client407 HTTP/1.1" + ls
-                + "Host: localhost:9000" + ls
-                + "User-Agent: curl/7.72.0" + ls
-                + "Accept: */*" + ls + ls + ls;
+        String content = """
+                GET /topic/weather/client407 HTTP/1.1
+                Host: localhost:9000
+                User-Agent: curl/7.72.0
+                Accept: */*
+                
+                
+
+                """;
         Request request = Request.of(content);
         assertThat(request.getHttpRequestType()).isEqualTo("GET");
         assertThat(request.getPoohMode()).isEqualTo("topic");
